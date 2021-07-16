@@ -169,7 +169,8 @@ int game(sf::RenderWindow &window, sf::Event &event)
     planet_f.setOrigin((sf::Vector2f){size_f/2, size_f/2});
     planet_f.setPosition((sf::Vector2f){960, size * 3200 / 5000});
 
-//creation des Nuage
+//creation des Nuage paralax
+    float decalagex_nuage = 0;
     sf::Sprite nuage;
     sf::Texture nuage_texture;
     if (!nuage_texture.loadFromFile("image/nuage.png"))
@@ -226,6 +227,9 @@ int game(sf::RenderWindow &window, sf::Event &event)
         draw_the_game(window, nuage, planet_f, planet, babe_sprite, juju, le_cyclist, pigon_tab, heal_bar, textAdire, textDit, nuage_text);
 
 //les animation et rotation...
+        decalagex_nuage += 1;
+        if (decalagex_nuage >= 5760)
+            decalagex_nuage -= 5760;
         i_rotation -= game_speed;
         i_rotation_f -= game_speed * 0.5;
         planet.setRotation(i_rotation);
@@ -235,6 +239,7 @@ int game(sf::RenderWindow &window, sf::Event &event)
         babe_sprite.setRotation(babeRotation);
         babeRotation -= game_speed - babeSpeed;
         juju.anime();
+        nuage.setTextureRect((sf::IntRect){(int)decalagex_nuage, 0, 1920, 1080});
 
 //Domage the juju.
         if (le_cyclist.get_int_rotate() <= -17 \
